@@ -2,7 +2,9 @@ package com.example.groupproject
 
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,8 @@ class FeedActivity : AppCompatActivity() {
 
     private lateinit var databaseReference: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
+
+    private lateinit var addRecipeButton : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,20 @@ class FeedActivity : AppCompatActivity() {
 
         // Fetch recipes from Firebase Database
         fetchRecipes()
+
+        addRecipeButton = findViewById(R.id.addRecipeButton)
+        addRecipeButton.setOnClickListener { addRecipe() }
     }
+
+    override fun onRestart() {
+        if (AddRecipeActivity.flag) {
+            databaseReference.child("recipe${AddRecipeActivity.recipe.id}").setValue(AddRecipeActivity.recipe)
+            fetchRecipes()
+            AddRecipeActivity.flag = false
+        }
+        super.onRestart()
+    }
+
 
     private fun addTestDataToDatabase() {
         val recipe1 = Recipe("1", "Spaghetti Carbonara", "Classic Italian pasta dish", listOf("Spaghetti", "Eggs", "Bacon", "Parmesan cheese"))
@@ -66,5 +83,12 @@ class FeedActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun addRecipe() {
+        var myIntent : Intent = Intent(this, AddRecipeActivity::class.java)
+        startActivity(myIntent)
+    }
+
+
 }
 
