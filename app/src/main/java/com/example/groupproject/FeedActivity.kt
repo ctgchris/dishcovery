@@ -20,7 +20,7 @@ class FeedActivity : AppCompatActivity() {
 
     private lateinit var databaseReference: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var sharedPreferences: SharedPreferences // Add this line
+    private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var addRecipeButton : Button
     private lateinit var logoutButton: Button
@@ -29,22 +29,15 @@ class FeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.feed)
-
-        // Initialize Firebase components
         databaseReference = FirebaseDatabase.getInstance().reference.child("recipes")
         firebaseAuth = FirebaseAuth.getInstance()
-
-        // Initialize RecyclerView
         recyclerView = findViewById(R.id.recipeRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recipeList = mutableListOf()
         recipeAdapter = RecipeAdapter(recipeList)
         recyclerView.adapter = recipeAdapter
 
-        // Add test data to Firebase Realtime Database
         addTestDataToDatabase()
-
-        // Fetch recipes from Firebase Database
         fetchRecipes()
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
@@ -99,7 +92,6 @@ class FeedActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error
             }
         })
     }
@@ -109,13 +101,8 @@ class FeedActivity : AppCompatActivity() {
         startActivity(myIntent)
     }
     private fun logoutUser() {
-        // Clear the user's login state from SharedPreferences
         sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
-
-        // Log out the user from Firebase
         firebaseAuth.signOut()
-
-        // Navigate to LoginActivity
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
