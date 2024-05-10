@@ -9,7 +9,7 @@
     android:padding="16dp">
     <ImageView
         android:id="@+id/logo"
-        android:src="@drawable/newlogo"
+        android:src="@drawable/logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center" />
