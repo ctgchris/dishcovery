@@ -31,6 +31,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".FeedActivity"/>
         <activity android:name=".AddRecipeActivity"/>
+        <activity android:name="RecipeActivity"/>
         <activity android:name=".Recipe"/>
 
 

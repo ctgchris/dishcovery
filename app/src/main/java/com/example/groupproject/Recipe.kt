@@ -1,5 +1,7 @@
 package com.example.groupproject
 
+import android.net.Uri
+
 data class Recipe(
     val id: String? = null,
     val title: String? = null,
