@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         logo = findViewById(R.id.logo)
 
-        logo!!.setImageResource(R.drawable.newlogo)
+        logo!!.setImageResource(R.drawable.logo)
         if (sharedPreferences.getBoolean("isLoggedIn", false)) {
             skipLogin()
         }
