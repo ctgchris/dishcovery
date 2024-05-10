@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
 
     <application
@@ -31,8 +32,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".FeedActivity"/>
         <activity android:name=".AddRecipeActivity"/>
-        <activity android:name="RecipeActivity"/>
+        <activity android:name=".RecipeActivity"/>
         <activity android:name=".Recipe"/>
+        <activity android:name=".NotesActivity"/>
 
 
     </application>

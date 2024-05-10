@@ -24,6 +24,7 @@ class FeedActivity : AppCompatActivity() {
 
     private lateinit var addRecipeButton : Button
     private lateinit var logoutButton: Button
+    private lateinit var notesButton : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,8 @@ class FeedActivity : AppCompatActivity() {
         addRecipeButton.setOnClickListener { addRecipe() }
         logoutButton = findViewById(R.id.logoutButton)
         logoutButton.setOnClickListener { logoutUser() }
+        notesButton = findViewById(R.id.notesButton)
+        notesButton.setOnClickListener { runNotes() }
 
 
     }
@@ -82,6 +85,7 @@ class FeedActivity : AppCompatActivity() {
                 adapter.onItemClickListener(object : RecipeAdapter.onItemClickListener{
                     override fun onItemClick(position: Int) {
                         val intent = Intent(this@FeedActivity, RecipeActivity::class.java)
+                        intent.putExtra("id", recipeList[position].id)
                         intent.putExtra("name", recipeList[position].title)
                         intent.putExtra("description", recipeList[position].description)
                         intent.putExtra("ingredients", recipeList[position].ingredients!!.joinToString(separator = ", "))
@@ -98,6 +102,11 @@ class FeedActivity : AppCompatActivity() {
 
     private fun addRecipe() {
         var myIntent : Intent = Intent(this, AddRecipeActivity::class.java)
+        startActivity(myIntent)
+    }
+
+    private fun runNotes() {
+        var myIntent : Intent = Intent(this, NotesActivity::class.java)
         startActivity(myIntent)
     }
     private fun logoutUser() {
