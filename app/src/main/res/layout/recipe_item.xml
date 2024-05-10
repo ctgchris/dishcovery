@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/item_border" >
 
     <TextView
         android:id="@+id/titleTextView"
@@ -16,8 +17,9 @@
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_description"
+        android:padding="8dp" />
 
-    <!-- Add more views for displaying other recipe details as needed -->
 
 </LinearLayout>
