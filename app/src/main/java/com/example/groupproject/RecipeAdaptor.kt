@@ -26,12 +26,10 @@ class RecipeAdapter(private val recipeList: List<Recipe>) : RecyclerView.Adapter
     inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         private val descriptionTextView: TextView = itemView.findViewById(R.id.descriptionTextView)
-        // Add more views if needed
 
         fun bind(recipe: Recipe) {
             titleTextView.text = recipe.title
             descriptionTextView.text = recipe.description
-            // Bind other views with recipe properties
         }
     }
 }

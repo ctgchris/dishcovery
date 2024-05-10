@@ -6,8 +6,13 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:background="#fca414"
-    android:padding="12dp">
-
+    android:padding="16dp">
+    <ImageView
+        android:id="@+id/logo"
+        android:src="@drawable/newlogo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,16 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:importantForAutofill="no" />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
-        android:inputType="textPassword"
-        android:importantForAutofill="no" />
+        android:inputType="textPassword"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

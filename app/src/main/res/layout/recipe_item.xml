@@ -18,6 +18,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <!-- Add more views for displaying other recipe details as needed -->
 
 </LinearLayout>

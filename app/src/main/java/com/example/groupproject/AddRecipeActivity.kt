@@ -1,19 +1,19 @@
 package com.example.groupproject
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 
 class AddRecipeActivity : AppCompatActivity() {
     private lateinit var nameET : EditText
     private lateinit var descriptionET : TextInputEditText
     private lateinit var ingredientsET : TextInputEditText
     private lateinit var finishButton : Button
+    private lateinit var mAuth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +24,15 @@ class AddRecipeActivity : AppCompatActivity() {
         ingredientsET = findViewById(R.id.ingredientsInput)
         finishButton = findViewById(R.id.finishButton)
         finishButton.setOnClickListener {addRecipe()}
+        mAuth = FirebaseAuth.getInstance()
+
     }
 
     private fun addRecipe() {
-        var name : String = nameET.text.toString().replace(" ", "").lowercase()
-        recipe = Recipe (name, nameET.text.toString(), descriptionET.text.toString(), ingredientsET.text.toString().split(", "))
+        val userEmail = mAuth.currentUser?.email
+
+        val name : String = nameET.text.toString().replace(" ", "").lowercase()
+        recipe = Recipe (name, nameET.text.toString(), descriptionET.text.toString(), ingredientsET.text.toString().split(", "), userEmail.toString())
         flag = true
         finish()
     }

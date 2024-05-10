@@ -1,8 +1,8 @@
 package com.example.groupproject
 
-
-
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -20,16 +20,17 @@ class LoginActivity : AppCompatActivity() {
     private var loginButton: Button? = null
     private var forgotPasswordButton: Button? = null
     private var progressBar: ProgressBar? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     private var mAuth: FirebaseAuth? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
 
-        // Firebase variables
         mAuth = FirebaseAuth.getInstance()
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        // Login variables
         userEmail = findViewById(R.id.emailInput)
         userPassword = findViewById(R.id.passwordInput)
         loginButton = findViewById(R.id.loginButton)
@@ -37,8 +38,9 @@ class LoginActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
 
         loginButton!!.setOnClickListener { loginUserAccount() }
-
         forgotPasswordButton!!.setOnClickListener { forgotPassword() }
+
+
     }
 
     private fun loginUserAccount() {
@@ -49,10 +51,12 @@ class LoginActivity : AppCompatActivity() {
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(applicationContext, "Please enter an email address!", Toast.LENGTH_LONG).show()
+            progressBar?.visibility = View.GONE
             return
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(applicationContext, "Please enter your password!", Toast.LENGTH_LONG).show()
+            progressBar?.visibility = View.GONE
             return
         }
 
@@ -60,16 +64,11 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 progressBar?.visibility = View.GONE
                 if (task.isSuccessful) {
-                    Toast.makeText(applicationContext, "Login successful!", Toast.LENGTH_LONG)
-                        .show()
-                    val successfulLoginIntent = Intent(this@LoginActivity, FeedActivity::class.java)
-                    startActivity(successfulLoginIntent)
+                    Toast.makeText(applicationContext, "Login successful!", Toast.LENGTH_LONG).show()
+                    sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+                    goToFeed()
                 } else {
-                    Toast.makeText(
-                        applicationContext,
-                        "Login failed!",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(applicationContext, "Login failed.", Toast.LENGTH_LONG).show()
                 }
             }
     }
@@ -78,21 +77,19 @@ class LoginActivity : AppCompatActivity() {
         val email: String = userEmail?.text.toString()
         userPassword!!.setText("")
 
-        // Docs citation: https://firebase.google.com/docs/auth/android/manage-users#kotlin+ktx_8
+        // Send reset password email
         mAuth!!.sendPasswordResetEmail(email).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(
-                    applicationContext,
-                    "A password reset email has been sent to $email!",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(applicationContext, "Password reset email has been sent to $email.", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(
-                    applicationContext,
-                    "An account with the email $email does not exist!",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(applicationContext, "No account with the email $email exists.", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun goToFeed() {
+        val successfulLoginIntent = Intent(this@LoginActivity, FeedActivity::class.java)
+        startActivity(successfulLoginIntent)
+        finish() 
     }
 }

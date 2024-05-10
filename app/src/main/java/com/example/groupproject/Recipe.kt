@@ -5,6 +5,7 @@ data class Recipe(
     val title: String? = null,
     val description: String? = null,
     val ingredients: List<String>? = null,
-    // Add more properties as needed
+    val userEmail: String? = null
+
 )
 
