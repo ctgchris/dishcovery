@@ -50,9 +50,9 @@ class FeedActivity : AppCompatActivity() {
     override fun onRestart() {
         if (AddRecipeActivity.flag) {
             databaseReference.child("recipe${AddRecipeActivity.recipe.id}").setValue(AddRecipeActivity.recipe)
-            fetchRecipes()
             AddRecipeActivity.flag = false
         }
+        fetchRecipes()
         super.onRestart()
     }
 
@@ -75,6 +75,17 @@ class FeedActivity : AppCompatActivity() {
                         recipeList.add(it)
                     }
                 }
+                var adapter = RecipeAdapter(recipeList)
+                recyclerView.adapter = adapter
+                adapter.onItemClickListener(object : RecipeAdapter.onItemClickListener{
+                    override fun onItemClick(position: Int) {
+                        val intent = Intent(this@FeedActivity, RecipeActivity::class.java)
+                        intent.putExtra("name", recipeList[position].title)
+                        intent.putExtra("description", recipeList[position].description)
+                        intent.putExtra("ingredients", recipeList[position].ingredients!!.joinToString(separator = ", "))
+                        startActivity(intent)
+                    }
+                })
                 recipeAdapter.notifyDataSetChanged()
             }
 
